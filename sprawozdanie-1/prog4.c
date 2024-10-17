@@ -8,7 +8,7 @@ int zrodlo_d, nowy_d, w, r, l_bajtow;
 l_bajtow = atoi(argv[2]);
 char bufor[l_bajtow];
 
-char nowa_nazwa[256];  // Zakładamy, że nazwa pliku nie przekracza 255 znaków
+char nowa_nazwa[256];
     snprintf(nowa_nazwa, sizeof(nowa_nazwa), "%s3", argv[1]);
 
 
