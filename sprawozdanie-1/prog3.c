@@ -20,17 +20,10 @@ char bufor[16];
 		return 1;
 	}
 	else {
-		printf("Utworzono nowy plik\n");
+		printf("Utworzono nowy plik oraz otwarto nowy plik\n");
 		
 	}
-	if((nowy_d = open(argv[2], O_RDWR))< 0) {
-		printf("Nie udalo sie otworzyc nowego pliku\n");
-	       return 1;
-	}	       
-        else {
-        	printf("Otwarto nowy plik\n");
-        	
-        }
+	
 	if((r = read(zrodlo_d, bufor, 16))<0){
 		printf("Nie udalo sie odczytac pliku\n");
 		return 1;
