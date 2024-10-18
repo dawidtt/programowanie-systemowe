@@ -23,7 +23,8 @@ char nowa_nazwa[256];
 
         if((nowy_d = creat(nowa_nazwa, S_IRWXU)) < 0){
                 printf("Nie udalo sie utworzyc nowego pliku\n");
-                return 1;
+                close(zrodlo_d);
+		return 1;
         }
         else {
                 printf("Utworzono a nastepnie otwarto nowy plik\n");
@@ -32,10 +33,12 @@ char nowa_nazwa[256];
        
         if((r = read(zrodlo_d, bufor, l_bajtow))<0){
                 printf("Nie udalo sie odczytac pliku\n");
-                return 1;
+                close(zrodlo_d);
+		close(nowy_d);
+		return 1;
         }
         else {
-                printf("Odczytano plik\n");
+                printf("Odczytano plik zrodlowy\n");
 
         }
 
@@ -44,13 +47,12 @@ char nowa_nazwa[256];
 
         if((w = write(nowy_d, bufor, l_bajtow)) < 0) {
                 printf("Nie udalo sie zapisac do pliku\n");
-                return 1;
-                }
-        else {
-                printf("Zapisano do nowego pliku\n");
-
+                close(zrodlo_d);
+		close(nowy_d);
+		return 1;
                 }
 	}
+	printf("Zapisano 3 razy pierwsze %d B. z pliku zrodlowego do nowego pliku\n", l_bajtow);
         close(zrodlo_d);
         close(nowy_d);
 

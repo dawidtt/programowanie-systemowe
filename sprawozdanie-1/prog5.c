@@ -4,10 +4,9 @@
 #include <unistd.h>
 
 int main(int argc, char *argv[]){
-int linux_d, windows_d, w, r, l_bajtow;
+int linux_d, windows_d, l_bajtow, licznik_zamian;
 
 char bufor[4096];
-
 
         if((linux_d = open(argv[1], O_RDONLY)) < 0) {
                 printf("Nie udalo sie otworzyc pliku w formacie linuxowego konca lini\n");
@@ -15,11 +14,8 @@ char bufor[4096];
                 }
         else {
                 printf("Otwarto plik w formacie linuxowym\n");
-
         }
 	
-	
-
         if((windows_d = creat(argv[2], S_IRWXU)) < 0){
                 printf("Nie udalo sie utworzyc nowego pliku\n");
                 close(linux_d);
@@ -27,37 +23,36 @@ char bufor[4096];
         }
         else {
                 printf("Utworzono a nastepnie otwarto nowy plik\n");
-
         }
 
 	while((l_bajtow = read(linux_d, bufor, sizeof(bufor))) > 0){
                 for(int i = 0; i < l_bajtow; i++){
 			if(bufor[i] == '\n'){
 
-
 				if((write(windows_d, "\r\n", 2)) < 0){
-			        	printf("Nie udalo sie zapisac do pliku windowsoweg");
+			        	printf("Nie udalo sie zapisac do pliku windowsowego");
 		       			close(linux_d);
 				        close(windows_d);
-
 					return 1;
 				}
+				else {
+			
+					licznik_zamian++;
+				}
 			}
-			else {
-				
+			else {	
                 		if((write(windows_d, &bufor[i], 1)) < 0) {
                     			printf("Nie mozna zapisac do pliku docelowego");
                     			close(linux_d);
        					close(windows_d);
-		
-                    			return 1;
+		   			return 1;
                 		}
         		}
 
-
 		}
 	}
-       
+
+        printf("Udalo sie pomyslnie zamienic plik w formacie linuxowym na plik w formacie windowsowym dokonujac %d zamian znakow konca lini\n", licznik_zamian);
         close(linux_d);
         close(windows_d);
 

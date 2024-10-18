@@ -13,8 +13,8 @@ int main() {
                 printf("blad\n");
         }
         else {
-                printf("macierzysty\n");
 		wait(&status);
+                printf("macierzysty\n");
 		printf("status: %d\n", status);
 		
         }
